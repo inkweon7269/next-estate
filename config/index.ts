@@ -23,11 +23,9 @@ const configs = {
         baseUrl: 'http://localhost:8000',
     },
     production: {
-        HTTP_ONLY: false,
+        HTTP_ONLY: true,
         baseUrl: 'http://localhost:8000',
     },
 }[env];
-
-console.log(configs);
 
 export default configs;
