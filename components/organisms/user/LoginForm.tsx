@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useLogin } from './hooks/useAuth';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const { Title } = Typography;
 
@@ -18,6 +19,8 @@ const loginSchema = yup.object().shape({
 });
 
 const LoginForm = () => {
+    const router = useRouter();
+
     const { mutate, isSuccess, isError } = useLogin();
     const form = useForm({
         resolver: yupResolver(loginSchema),
@@ -28,7 +31,10 @@ const LoginForm = () => {
         mutate(data);
     };
 
-    console.log(isSuccess);
+    if (isSuccess) {
+        console.log('로그인 Mutate');
+        router.push('/sample');
+    }
 
     return (
         <Form

@@ -39,6 +39,7 @@ const JoinForm = () => {
     };
 
     if (isSuccess) {
+        console.log('로그인 Mutate');
         router.push('/');
     }
 
@@ -47,7 +48,6 @@ const JoinForm = () => {
             layout='vertical'
             onFinish={handleSubmit(onSubmit)}
         >
-
             <CardWrap>
                 <Card>
                     <Title level={5}>회원가입</Title>

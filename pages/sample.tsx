@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { Form } from 'antd';
+import { BackTop, Form, Layout, Menu } from 'antd';
 import LabelField from '../components/atoms/form/LabelField';
 import TextField from '../components/atoms/form/TextField';
 import NumberField from '../components/atoms/form/NumberField';
@@ -14,6 +14,11 @@ import TextAreaField from '../components/atoms/form/TextAreaField';
 import SwitchField from '../components/atoms/form/SwitchField';
 import ButtonField from '../components/atoms/form/ButtonField';
 import axios from 'axios';
+import SiteHeader from '../components/atoms/SiteHeader';
+import { useRouter } from 'next/router';
+import SiteSider from '../components/atoms/SiteSider';
+
+const { Content, Sider } = Layout;
 
 const getPeople = async () => {
     const res = await axios.get('https://swapi.dev/api/people/1');
@@ -25,22 +30,25 @@ const Sample = () => {
     const { control } = form;
     const { data } = useQuery(['posts'], () => getPeople());
 
-    console.log(data);
-
     const onSubmit = (data: any) => {
         console.log(data);
     };
 
     return (
-        <>
-            {/*
+        <SiteSider>
+            <SiteHeader
+                title='샘플 페이지'
+                items={[
+                    { label: '로그아웃', key: '/' },
+                ]}
+            />
+
             <TextField
                 control={control}
                 type='search'
                 name='search'
                 onSearch={onSubmit}
             />
-            */}
 
             <Form
                 layout='vertical'
@@ -123,7 +131,7 @@ const Sample = () => {
 
                 <ButtonField type='primary' htmlType='submit' text='클릭' />
             </Form>
-        </>
+        </SiteSider>
     );
 };
 

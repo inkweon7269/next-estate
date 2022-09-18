@@ -16,6 +16,7 @@ const SwitchField: FC<IPropsSwitch> = ({
         <Switch
             {...field}
             {...props}
+            checked={field.value}
         />
     );
 

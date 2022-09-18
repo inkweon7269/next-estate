@@ -1,8 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { message } from 'antd';
 import { axiosInstance } from '../../../../axiosInstance';
-import { setToken } from '../../../../utilies/statusFunc';
-import { AxiosResponse } from 'axios';
+import { setCookie } from 'cookies-next';
 
 const postLogin = async (data: any) => {
     const res = await axiosInstance.post('/auth/signin', data);
@@ -21,8 +20,8 @@ const useLogin = () => {
             // @ts-ignore
             message.warning(error?.response?.data.message);
         },
-        onSuccess: (data, variables, context) => {
-            setToken(data.data.data.accessToken);
+        onSuccess: (res, variables, context) => {
+            setCookie('asToken', res.data.data.accessToken);
             message.success('로그인되었습니다.');
         },
     });

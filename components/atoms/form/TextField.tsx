@@ -54,7 +54,6 @@ const TextField: FC<IPropsInput> = ({
                         }
                         : field)}
                     {...props}
-                    onSearch={onSearch}
                 />
             );
         }
