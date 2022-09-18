@@ -6,7 +6,7 @@ export interface IPropsLabel {
     children: React.ReactNode;
 }
 
-const StyledLabel: FC<IPropsLabel> = (
+const LabelField: FC<IPropsLabel> = (
     {
         label,
         children,
@@ -19,4 +19,4 @@ const StyledLabel: FC<IPropsLabel> = (
     );
 };
 
-export default StyledLabel;
+export default LabelField;

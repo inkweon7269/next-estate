@@ -15,15 +15,12 @@ switch (process.env.NEXT_PUBLIC_TYPE) {
 
 const configs = {
     localhost: {
-        HTTP_ONLY: false,
         baseUrl: 'http://localhost:8000',
     },
     development: {
-        HTTP_ONLY: false,
         baseUrl: 'http://localhost:8000',
     },
     production: {
-        HTTP_ONLY: true,
         baseUrl: 'http://localhost:8000',
     },
 }[env];

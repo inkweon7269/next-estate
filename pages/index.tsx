@@ -1,5 +1,7 @@
+import LoginForm from '../components/organisms/user/LoginForm';
+
 const Index = () => {
-    return <h1>메인</h1>
+    return <LoginForm />
 };
 
 export default Index;

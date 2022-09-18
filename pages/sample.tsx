@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Form } from 'antd';
-import StyledLabel from '../components/atoms/form/StyledLabel';
+import LabelField from '../components/atoms/form/LabelField';
 import TextField from '../components/atoms/form/TextField';
 import NumberField from '../components/atoms/form/NumberField';
 import CheckboxField from '../components/atoms/form/CheckboxField';
@@ -46,13 +46,13 @@ const Sample = () => {
                 layout='vertical'
                 onFinish={form.handleSubmit(onSubmit)}
             >
-                <StyledLabel label='이메일'>
+                <LabelField label='이메일'>
                     <TextField
                         control={control}
                         type='text'
                         name='email'
                     />
-                </StyledLabel>
+                </LabelField>
 
                 <TextField
                     control={control}
