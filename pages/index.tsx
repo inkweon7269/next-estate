@@ -22,16 +22,7 @@ const Index = () => {
     };
 
     return (
-        <Layout>
-            <SiteHeader
-                title='로그인'
-                items={[
-                    { label: '로그인', key: '/' },
-                    { label: '회원가입', key: '/join' },
-                ]}
-            />
-            <LoginForm />
-        </Layout>
+        <LoginForm />
     )
 };
 
