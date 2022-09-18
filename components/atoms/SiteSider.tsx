@@ -1,16 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { BackTop, Form, Layout, Menu, message } from 'antd';
-import SiteHeader from './SiteHeader';
-import LabelField from './form/LabelField';
-import TextField from './form/TextField';
-import NumberField from './form/NumberField';
-import CheckboxField from './form/CheckboxField';
-import RadioField from './form/RadioField';
-import SelectField from './form/SelectField';
-import SelectGroupField from './form/SelectGroupField';
-import TextAreaField from './form/TextAreaField';
-import SwitchField from './form/SwitchField';
-import ButtonField from './form/ButtonField';
+import { BackTop, Layout, Menu, message } from 'antd';
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 
