@@ -21,7 +21,7 @@ const useLogin = () => {
             message.warning(error?.response?.data.message);
         },
         onSuccess: (res, variables, context) => {
-            setCookie('asToken', res.data.data.accessToken);
+            setCookie('aptToken', res.data.data.accessToken);
             message.success('로그인되었습니다.');
         },
     });

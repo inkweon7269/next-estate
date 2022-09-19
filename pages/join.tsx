@@ -6,16 +6,6 @@ import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 
 const Join = () => {
-    const router = useRouter();
-
-    useEffect(() => {
-        const token = getCookie('asToken');
-        if (token) {
-            message.success('자동 로그인 중입니다.');
-            router.push('/sample');
-        }
-    }, [])
-
     return (
         <Layout>
             <SiteHeader

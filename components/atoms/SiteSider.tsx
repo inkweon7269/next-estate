@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { BackTop, Layout, Menu, message } from 'antd';
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
+import styled from 'styled-components';
 
 const { Content, Sider } = Layout;
 
@@ -11,18 +12,10 @@ const SiteSider: FC<any> = ({ children }) => {
     const onCollapsed = (collapsed: boolean) => setCollapsed(collapsed);
     const onMenuSelect = ({ key }: { key: string }) => router.push(key).then(() => window.scrollTo(0, 0));
 
-    useEffect(() => {
-        const token = getCookie('asToken');
-        if (!token) {
-            message.warning('로그아웃 중입니다.');
-            router.push('/');
-        }
-    }, []);
-
     return (
         <Layout hasSider style={{ minHeight: '100vh' }}>
             <BackTop />
-            <Sider
+            <_StyledSider
                 theme='light'
                 collapsible
                 collapsed={collapsed}
@@ -36,16 +29,18 @@ const SiteSider: FC<any> = ({ children }) => {
                     bottom: 0,
                 }}
             >
-                <Menu
+                <_StyledMenu
                     theme='light'
                     defaultSelectedKeys={[router.pathname]}
                     mode='inline'
                     items={[
                         { label: 'sample', key: '/sample' },
+                        { label: '아파트 정보', key: '/apt' },
+                        { label: '즐겨찾기', key: '/favorite' },
                     ]}
                     onSelect={onMenuSelect}
                 />
-            </Sider>
+            </_StyledSider>
             <Content>
                 {children}
             </Content>
@@ -54,3 +49,13 @@ const SiteSider: FC<any> = ({ children }) => {
 };
 
 export default SiteSider;
+
+const _StyledSider = styled(Sider)`
+  .ant-layout-sider-trigger {
+    border-right: 1px solid #f0f0f0;
+  }
+`;
+
+const _StyledMenu = styled(Menu)`
+  height: 100%;
+`;

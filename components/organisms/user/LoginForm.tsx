@@ -33,7 +33,7 @@ const LoginForm = () => {
 
     if (isSuccess) {
         console.log('로그인 Mutate');
-        router.push('/sample');
+        router.push('/apt');
     }
 
     return (

@@ -1,3 +1,6 @@
 export const queryKeys = {
-    account: 'account',
+    user: 'user',
+    apt: 'apt',
+    deals: 'deals',
+    favorite: 'favorite',
 };

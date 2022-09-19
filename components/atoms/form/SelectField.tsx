@@ -7,18 +7,27 @@ export interface IPropsSelect {
     control?: Control;
 
     options: { value: string | number | boolean; label: string; disabled?: boolean }[];
+    onChange?: (data: any) => void;
+    style?: any;
 }
 
 const SelectField: FC<IPropsSelect> = ({
                                            name,
                                            control,
                                            options,
+                                           onChange,
                                            ...props
                                        }) => {
     const components = (field: any = null) => (
         <Select
             {...field}
             {...props}
+            onChange={(e) => {
+                if (onChange) {
+                    onChange(e);
+                }
+                field.onChange(e);
+            }}
         >
             {options.map((item, key) => (
                 <Select.Option key={key} value={item.value} disabled={item.disabled}>

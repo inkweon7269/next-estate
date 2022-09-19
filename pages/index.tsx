@@ -8,14 +8,6 @@ import { useRouter } from 'next/router';
 const Index = () => {
     const router = useRouter();
 
-    useEffect(() => {
-        const token = getCookie('asToken');
-        if (token) {
-            message.success('자동 로그인 중입니다.');
-            router.push('/sample');
-        }
-    }, []);
-
     return (
         <Layout>
             <SiteHeader
