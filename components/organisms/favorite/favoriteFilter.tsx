@@ -6,6 +6,8 @@ import SelectField from '../../atoms/form/SelectField';
 import { Card, Col, Row, Typography } from 'antd';
 import { numberCommaFormat } from '../../../utilies/format';
 import { getCookie } from 'cookies-next';
+import DateRangeField from '../../atoms/form/DateRangeField';
+import LabelField from '../../atoms/form/LabelField';
 
 const { Title, Text, Paragraph } = Typography;
 const { Meta } = Card;
@@ -52,6 +54,29 @@ const FavoriteFilter = ({ params }) => {
         }
     }, [params.ids, data]);
 
+    const onDate = (range) => {
+        if (range[0]) {
+            const startDate = range[0], endDate = range[1];
+            router.push({
+                pathname: router.pathname,
+                query: {
+                    ...params,
+                    startDate,
+                    endDate,
+                },
+            });
+        } else {
+            router.push({
+                pathname: router.pathname,
+                query: {
+                    ...params,
+                    startDate: '',
+                    endDate: '',
+                },
+            });
+        }
+    };
+
     const onChange = (data: any) => {
         const ids = data.length ? data.join(',') : '';
         router.push({
@@ -66,6 +91,14 @@ const FavoriteFilter = ({ params }) => {
 
     return (
         <>
+            <LabelField label='거래기간'>
+                <DateRangeField
+                    control={control}
+                    name='date'
+                    onChange={onDate}
+                />
+            </LabelField>
+
             <SelectField
                 control={control}
                 name='ids'

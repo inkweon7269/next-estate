@@ -51,6 +51,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         page: context.query.page ? context.query.page : 1,
         limit: context.query.limit ? context.query.limit : 50,
         ids: context.query.ids ? context.query.ids : '',
+        startDate: context.query.startDate ? context.query.startDate : '',
+        endDate: context.query.endDate ? context.query.endDate : '',
     };
 
     await queryClient.prefetchQuery([queryKeys.favorite, params], () => getAllFavorite(token, params));
