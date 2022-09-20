@@ -55,12 +55,12 @@ const FavoriteTable = ({ params }) => {
                 dataSource={data?.data?.list}
             />
 
-            {/*<StyledPagination
+            <StyledPagination
                 page={params.page}
                 limit={params.limit}
                 total={data?.data?.totalResult}
                 onChange={onPaginationChange}
-            />*/}
+            />
         </>
     );
 };
