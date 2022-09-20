@@ -16,7 +16,7 @@ import ButtonField from '../components/atoms/form/ButtonField';
 import axios from 'axios';
 import SiteHeader from '../components/atoms/SiteHeader';
 import { useRouter } from 'next/router';
-import SiteSider from '../components/atoms/SiteSider';
+import SiteWrap from '../components/atoms/SiteWrap';
 
 const { Content, Sider } = Layout;
 
@@ -35,205 +35,102 @@ const Sample = () => {
 
     return (
         <div>
-            <TextField
-                control={control}
-                type='search'
-                name='search'
-                onSearch={onSubmit}
-            />
-
-            <Form
-                layout='vertical'
-                onFinish={form.handleSubmit(onSubmit)}
-            >
-                <LabelField label='이메일'>
-                    <TextField
-                        control={control}
-                        type='text'
-                        name='email'
-                    />
-                </LabelField>
-
-                <TextField
-                    control={control}
-                    type='password'
-                    name='pw'
-                />
-
-                <NumberField
-                    control={control}
-                    name='point'
-                />
-
-                <CheckboxField
-                    control={control}
-                    name='country'
-                    options={[
-                        { label: '한국', value: 'Korea' },
-                        { label: '영국', value: 'England' },
-                    ]}
-                />
-
-                <RadioField
-                    control={control}
-                    name='fruit'
-                    options={[
-                        { label: '사과', value: 'Apple' },
-                        { label: '바나나', value: 'Banana' },
-                    ]}
-                />
-
-                <SelectField
-                    control={control}
-                    name='gender'
-                    options={[
-                        { label: '남자', value: 'Male' },
-                        { label: '여자', value: 'Female' },
-                    ]}
-                />
-
-                <SelectGroupField
-                    control={control}
-                    name='delivery'
-                    options={[
-                        {
-                            group: '국내',
-                            optionLists: [
-                                { label: '경상도', value: '경상도' },
-                            ],
-                        },
-                        {
-                            group: '해외',
-                            optionLists: [
-                                { label: '아마존', value: '아마존' },
-                            ],
-                        },
-                    ]}
-                />
-
-                <TextAreaField
-                    control={control}
-                    name='intro'
-                />
-
-                <SwitchField
-                    control={control}
-                    name='bool'
-                />
-
-                <ButtonField type='primary' htmlType='submit' text='클릭' />
-            </Form>
-        </div>
-    )
-    /*
-    const form = useForm();
-    const { control } = form;
-    const { data } = useQuery(['posts'], () => getPeople());
-
-    const onSubmit = (data: any) => {
-        console.log(data);
-    };
-
-    return (
-        <SiteSider>
             <SiteHeader
-                title='샘플 페이지'
-                items={[
-                    { label: '로그아웃', key: '/' },
-                ]}
+                title='Sample'
             />
 
-            <TextField
-                control={control}
-                type='search'
-                name='search'
-                onSearch={onSubmit}
-            />
-
-            <Form
-                layout='vertical'
-                onFinish={form.handleSubmit(onSubmit)}
-            >
-                <LabelField label='이메일'>
-                    <TextField
-                        control={control}
-                        type='text'
-                        name='email'
-                    />
-                </LabelField>
-
+            <Content style={{ padding: 20 }}>
                 <TextField
                     control={control}
-                    type='password'
-                    name='pw'
+                    type='search'
+                    name='search'
+                    onSearch={onSubmit}
                 />
 
-                <NumberField
-                    control={control}
-                    name='point'
-                />
+                <Form
+                    layout='vertical'
+                    onFinish={form.handleSubmit(onSubmit)}
+                >
+                    <LabelField label='이메일'>
+                        <TextField
+                            control={control}
+                            type='text'
+                            name='email'
+                        />
+                    </LabelField>
 
-                <CheckboxField
-                    control={control}
-                    name='country'
-                    options={[
-                        { label: '한국', value: 'Korea' },
-                        { label: '영국', value: 'England' },
-                    ]}
-                />
+                    <TextField
+                        control={control}
+                        type='password'
+                        name='pw'
+                    />
 
-                <RadioField
-                    control={control}
-                    name='fruit'
-                    options={[
-                        { label: '사과', value: 'Apple' },
-                        { label: '바나나', value: 'Banana' },
-                    ]}
-                />
+                    <NumberField
+                        control={control}
+                        name='point'
+                    />
 
-                <SelectField
-                    control={control}
-                    name='gender'
-                    options={[
-                        { label: '남자', value: 'Male' },
-                        { label: '여자', value: 'Female' },
-                    ]}
-                />
+                    <CheckboxField
+                        control={control}
+                        name='country'
+                        options={[
+                            { label: '한국', value: 'Korea' },
+                            { label: '영국', value: 'England' },
+                        ]}
+                    />
 
-                <SelectGroupField
-                    control={control}
-                    name='delivery'
-                    options={[
-                        {
-                            group: '국내',
-                            optionLists: [
-                                { label: '경상도', value: '경상도' },
-                            ],
-                        },
-                        {
-                            group: '해외',
-                            optionLists: [
-                                { label: '아마존', value: '아마존' },
-                            ],
-                        },
-                    ]}
-                />
+                    <RadioField
+                        control={control}
+                        name='fruit'
+                        options={[
+                            { label: '사과', value: 'Apple' },
+                            { label: '바나나', value: 'Banana' },
+                        ]}
+                    />
 
-                <TextAreaField
-                    control={control}
-                    name='intro'
-                />
+                    <SelectField
+                        control={control}
+                        name='gender'
+                        options={[
+                            { label: '남자', value: 'Male' },
+                            { label: '여자', value: 'Female' },
+                        ]}
+                    />
 
-                <SwitchField
-                    control={control}
-                    name='bool'
-                />
+                    <SelectGroupField
+                        control={control}
+                        name='delivery'
+                        options={[
+                            {
+                                group: '국내',
+                                optionLists: [
+                                    { label: '경상도', value: '경상도' },
+                                ],
+                            },
+                            {
+                                group: '해외',
+                                optionLists: [
+                                    { label: '아마존', value: '아마존' },
+                                ],
+                            },
+                        ]}
+                    />
 
-                <ButtonField type='primary' htmlType='submit' text='클릭' />
-            </Form>
-        </SiteSider>
+                    <TextAreaField
+                        control={control}
+                        name='intro'
+                    />
+
+                    <SwitchField
+                        control={control}
+                        name='bool'
+                    />
+
+                    <ButtonField type='primary' htmlType='submit' text='클릭' />
+                </Form>
+            </Content>
+        </div>
     );
-    */
 };
 
 export default Sample;

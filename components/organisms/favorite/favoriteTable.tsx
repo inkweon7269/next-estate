@@ -1,19 +1,18 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
-import StyledTable from '../../atoms/StyledTable';
-import StyledPagination from '../../atoms/StyledPagination';
-import { useDeals } from './hooks/useApts';
+import { useAllFavorite } from './hooks/useFavorite';
 import dayjs from 'dayjs';
 import { DateTimeFormat, numberCommaFormat } from '../../../utilies/format';
 import { dealStatus } from '../../../utilies/statusFunc';
+import StyledTable from '../../atoms/StyledTable';
+import StyledPagination from '../../atoms/StyledPagination';
 import { getCookie } from 'cookies-next';
 
-const AptTable = ({ params }) => {
+const FavoriteTable = ({ params }) => {
 
     const token = getCookie('aptToken');
     const router = useRouter();
-
-    const { data, isLoading } = useDeals(token, params);
+    const { data, isLoading } = useAllFavorite(token, params);
 
     const columns = [
         {
@@ -31,6 +30,7 @@ const AptTable = ({ params }) => {
         { title: '체결가격', dataIndex: 'money', render: (text: any, record: any) => numberCommaFormat(text) },
         { title: '거래유형', dataIndex: 'status', render: (text: any, record: any) => dealStatus(text) },
     ];
+
     const onPaginationChange = (page, limit) => {
         router.push({
             pathname: router.pathname,
@@ -43,7 +43,7 @@ const AptTable = ({ params }) => {
     };
 
     if (isLoading) {
-        return <h1>Loading...</h1>;
+        return <h1>Loading...</h1>
     }
 
     return (
@@ -55,14 +55,14 @@ const AptTable = ({ params }) => {
                 dataSource={data?.data?.list}
             />
 
-            <StyledPagination
+            {/*<StyledPagination
                 page={params.page}
                 limit={params.limit}
                 total={data?.data?.totalResult}
                 onChange={onPaginationChange}
-            />
+            />*/}
         </>
     );
 };
 
-export default AptTable;
+export default FavoriteTable;

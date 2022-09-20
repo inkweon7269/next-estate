@@ -9,6 +9,7 @@ export interface IPropsSelect {
     options: { value: string | number | boolean; label: string; disabled?: boolean }[];
     onChange?: (data: any) => void;
     style?: any;
+    mode?: 'multiple' | 'tags';
 }
 
 const SelectField: FC<IPropsSelect> = ({

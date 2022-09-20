@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import SiteSider from '../components/atoms/SiteSider';
+import SiteWrap from '../components/atoms/SiteWrap';
 import SiteHeader from '../components/atoms/SiteHeader';
 import { Layout } from 'antd';
 import { GetServerSideProps } from 'next';
@@ -12,7 +12,7 @@ import AptTable from '../components/organisms/apt/AptTable';
 import Pan from '../components/atoms/Pan';
 import AptFilter from '../components/organisms/apt/AptFilter';
 import { getCookie } from 'cookies-next';
-import cookies from "next-cookies";
+import cookies from 'next-cookies';
 
 
 const { Content } = Layout;
@@ -26,26 +26,21 @@ const Apt = ({ params }) => {
     });
 
     return (
-        <SiteSider>
+        <FormProvider {...form}>
             <SiteHeader
                 title='아파트 정보'
-                items={[
-                    { label: '로그아웃', key: '/' },
-                ]}
             />
 
             <Content style={{ padding: 20 }}>
-                <FormProvider {...form}>
-                    <Pan>
-                        <AptFilter params={params} />
-                    </Pan>
+                <Pan>
+                    <AptFilter params={params} />
+                </Pan>
 
-                    <Pan>
-                        <AptTable params={params} />
-                    </Pan>
-                </FormProvider>
+                <Pan>
+                    <AptTable params={params} />
+                </Pan>
             </Content>
-        </SiteSider>
+        </FormProvider>
     );
 };
 
@@ -64,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
 
     // await queryClient.prefetchQuery([queryKeys.apt], () => getAptSimple());
-    await queryClient.prefetchQuery([queryKeys.apt, params], () => getAptDeals(token, params));
+    await queryClient.prefetchQuery([queryKeys.apt, token, params], () => getAptDeals(token, params));
 
     return {
         props: {

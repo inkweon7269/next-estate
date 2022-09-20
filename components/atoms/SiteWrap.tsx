@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const { Content, Sider } = Layout;
 
-const SiteSider: FC<any> = ({ children }) => {
+const SiteWrap: FC<any> = ({ children }) => {
     const router = useRouter();
     const [collapsed, setCollapsed] = useState(false);
     const onCollapsed = (collapsed: boolean) => setCollapsed(collapsed);
@@ -48,7 +48,7 @@ const SiteSider: FC<any> = ({ children }) => {
     );
 };
 
-export default SiteSider;
+export default SiteWrap;
 
 const _StyledSider = styled(Sider)`
   .ant-layout-sider-trigger {

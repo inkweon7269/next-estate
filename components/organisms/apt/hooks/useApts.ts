@@ -1,7 +1,9 @@
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import { axiosInstance, getJWTHeader } from '../../../../axiosInstance';
 import { queryKeys } from '../../../../react-query/constants';
 import { message } from 'antd';
+import { getCookie, setCookie } from 'cookies-next';
+import { queryClient } from '../../../../react-query/queryClient';
 
 export const getAptSimple = async (token) => {
     const { data } = await axiosInstance.get('/apt/simple', {
@@ -16,6 +18,11 @@ export const getAptDeals = async (token, params: any) => {
         params,
     });
 
+    return data;
+};
+
+export const getCrawling = async () => {
+    const { data } = await axiosInstance.get('/crawling');
     return data;
 };
 
@@ -40,10 +47,23 @@ const useDeals = (token, params: any) => {
 const useAptDeals = (token, params: any) => {
     return useQueries({
         queries: [
-            { queryKey: [queryKeys.apt], queryFn: () => getAptSimple(token) },
-            { queryKey: [queryKeys.deals], queryFn: () => getAptDeals(token, params) },
+            { queryKey: [queryKeys.apt, token], queryFn: () => getAptSimple(token) },
+            { queryKey: [queryKeys.deals, token], queryFn: () => getAptDeals(token, params) },
         ],
     });
 };
 
-export { useAptSimple, useDeals, useAptDeals };
+const useCrawling = () => {
+    return useMutation(getCrawling, {
+        onError: (error, variables, context) => {
+            const content = error instanceof Error ? error.message : 'error connecting to the server';
+            message.success(content);
+        },
+        onSuccess: (res, variables, context) => {
+            message.success('정보를 업데이트했습니다.');
+            queryClient.invalidateQueries([queryKeys.deals]);
+        },
+    });
+};
+
+export { useAptSimple, useDeals, useAptDeals, useCrawling };

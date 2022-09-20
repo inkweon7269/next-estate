@@ -9,7 +9,7 @@ const Index = () => {
     const router = useRouter();
 
     return (
-        <Layout>
+        <>
             <SiteHeader
                 title='로그인'
                 items={[
@@ -18,7 +18,7 @@ const Index = () => {
                 ]}
             />
             <LoginForm />
-        </Layout>
+        </>
     );
 };
 
