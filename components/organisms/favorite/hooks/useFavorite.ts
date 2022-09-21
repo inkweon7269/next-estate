@@ -21,6 +21,15 @@ export const getAllFavorite = async (token, params: any) => {
     return data;
 };
 
+export const getFavoriteCharts = async (token, params: any) => {
+    const { data } = await axiosInstance.get('/favorite/charts', {
+        headers: getJWTHeader(token),
+        params,
+    });
+
+    return data;
+};
+
 export const postFavorite = async (data: any) => {
     const token = getCookie('token');
     const res = await axiosInstance.post('/favorite', data, {
@@ -47,6 +56,15 @@ const useAllFavorite = (token, params: any) => {
     });
 };
 
+const useFavoriteCharts = (token, params: any) => {
+    return useQuery([queryKeys.favorite, token, params], () => getFavoriteCharts(token, params), {
+        onError: error => {
+            const content = error instanceof Error ? error.message : 'error connecting to the server';
+            message.error(content);
+        },
+    })
+}
+
 const useAddFavorite = () => {
     return useMutation(postFavorite, {
         onError: (error: any, variables, context) => {
@@ -60,4 +78,4 @@ const useAddFavorite = () => {
     });
 };
 
-export { useFavoriteSimple, useAllFavorite, useAddFavorite };
+export { useFavoriteSimple, useAllFavorite, useFavoriteCharts, useAddFavorite };

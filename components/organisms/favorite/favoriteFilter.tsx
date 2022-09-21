@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useFavoriteSimple } from './hooks/useFavorite';
+import { useFavoriteCharts, useFavoriteSimple } from './hooks/useFavorite';
 import { useFormContext } from 'react-hook-form';
 import SelectField from '../../atoms/form/SelectField';
 import { Card, Col, Row, Typography } from 'antd';
@@ -8,6 +8,18 @@ import { numberCommaFormat } from '../../../utilies/format';
 import { getCookie } from 'cookies-next';
 import DateRangeField from '../../atoms/form/DateRangeField';
 import LabelField from '../../atoms/form/LabelField';
+import {
+    Bar,
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+    BarChart,
+} from 'recharts';
 
 const { Title, Text, Paragraph } = Typography;
 const { Meta } = Card;
@@ -22,6 +34,7 @@ const FavoriteFilter = ({ params }) => {
     const [apts, setApts] = useState([]);
 
     const { data, isLoading } = useFavoriteSimple(token);
+    const { data: charts, isLoading: LoadingCharts } = useFavoriteCharts(token, params);
 
     useEffect(() => {
         if (data?.data) {
@@ -45,7 +58,7 @@ const FavoriteFilter = ({ params }) => {
                     if (item === jtem.aptId) {
                         arr.push(jtem);
                     }
-                })
+                });
             });
 
             setApts(arr.flatMap(item => item.apt));
@@ -89,6 +102,12 @@ const FavoriteFilter = ({ params }) => {
         });
     };
 
+    if (isLoading || LoadingCharts) {
+        return <h1>Loading...</h1>;
+    }
+
+    console.log(charts);
+
     return (
         <>
             <LabelField label='거래기간'>
@@ -108,27 +127,97 @@ const FavoriteFilter = ({ params }) => {
                 style={{ width: '100%', marginBottom: 16 }}
             />
 
-            <Row gutter={16}>
-                {apts?.map((item, index) => (
-                    <Col key={item.id} span={8}>
-                        <Card
-                            title={item.name}
-                            actions={[
-                                <Paragraph key={index}>
-                                    <Text>{item.buildAt} 준공</Text>
-                                </Paragraph>,
-                                <Paragraph key={index}>
-                                    <Text>{numberCommaFormat(item.people)} 세대</Text>
-                                </Paragraph>,
-                                <Paragraph key={index}>
-                                    <Text>{numberCommaFormat(item.group)} 동</Text>
-                                </Paragraph>,
-                            ]}>
-                            <Meta description={item.address} />
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
+
+            {charts.data?.map((item, index) => {
+                return (
+                    <Row gutter={16}>
+                        <Col key={item.id} span={8}>
+                            <Card
+                                title={item.name}
+                                actions={[
+                                    <Paragraph key={index}>
+                                        <Text>{item.buildAt} 준공</Text>
+                                    </Paragraph>,
+                                    <Paragraph key={index}>
+                                        <Text>{numberCommaFormat(item.people)} 세대</Text>
+                                    </Paragraph>,
+                                    <Paragraph key={index}>
+                                        <Text>{numberCommaFormat(item.group)} 동</Text>
+                                    </Paragraph>,
+                                ]}>
+                                <Meta description={item.address} />
+                            </Card>
+
+
+                        </Col>
+                        <Col key={item.id} span={8}>
+                            <div style={{ height: 300 }}>
+                                <ResponsiveContainer width='100%' height='100%'>
+                                    <LineChart
+                                        width={300}
+                                        height={300}
+                                        data={item.buyDeals}
+                                        margin={{
+                                            top: 5,
+                                            right: 30,
+                                            left: 30,
+                                            bottom: 5,
+                                        }}
+                                    >
+                                        <XAxis dataKey='dealDate' />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
+                                        <Line type='monotone' dataKey='money' stroke='#8884d8' />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </Col>
+                        <Col key={item.id} span={8}>
+                            <div style={{ height: 300 }}>
+                                <ResponsiveContainer width='100%' height='100%'>
+                                    <BarChart
+                                        width={300}
+                                        height={300}
+                                        data={item.rentDeals}
+                                        margin={{
+                                            top: 5,
+                                            right: 30,
+                                            left: 30,
+                                            bottom: 5,
+                                        }}
+                                    >
+                                        <CartesianGrid strokeDasharray='3 3' />
+                                        <XAxis dataKey='dealDate' />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
+                                        <Bar dataKey='money' fill='#8884d8' />
+                                    </BarChart>
+
+                                    {/*<BarChart
+                                        width={500}
+                                        height={500}
+                                        data={item.rentDeals}
+                                        margin={{
+                                            top: 20,
+                                            right: 10,
+                                            left: 40,
+                                            bottom: 20,
+                                        }}
+                                    >
+                                        <XAxis dataKey='dealDate' />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
+                                        <Bar type='monotone' dataKey='money' stroke='#8884d8' />
+                                    </BarChart>*/}
+                                </ResponsiveContainer>
+                            </div>
+                        </Col>
+                    </Row>
+                );
+            })}
         </>
     );
 };

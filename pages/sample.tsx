@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { BackTop, Form, Layout, Menu } from 'antd';
+import { BackTop, Form, Layout, Menu, Tooltip } from 'antd';
 import LabelField from '../components/atoms/form/LabelField';
 import TextField from '../components/atoms/form/TextField';
 import NumberField from '../components/atoms/form/NumberField';
@@ -17,6 +17,7 @@ import axios from 'axios';
 import SiteHeader from '../components/atoms/SiteHeader';
 import { useRouter } from 'next/router';
 import SiteWrap from '../components/atoms/SiteWrap';
+import { Bar, CartesianGrid, Legend, Line, ResponsiveContainer, XAxis, YAxis, ComposedChart } from 'recharts';
 
 const { Content, Sider } = Layout;
 
@@ -33,6 +34,29 @@ const Sample = () => {
         console.log(data);
     };
 
+    const data = [
+        {
+            dateBuy: '2022-01-01',
+            buy: 10,
+            dateRent: '2022-01-01',
+            rent: 10,
+        },
+        {
+            dateRent: '2022-01-01',
+            rent: 20,
+        },
+        {
+            dateBuy: '2022-01-01',
+            buy: 20,
+        },
+        {
+            dateBuy: '2022-01-01',
+            buy: 30,
+            dateRent: '2022-01-01',
+            rent: 30,
+        },
+    ];
+
     return (
         <div>
             <SiteHeader
@@ -40,6 +64,32 @@ const Sample = () => {
             />
 
             <Content style={{ padding: 20 }}>
+                <div style={{ width: 'calc(100vw - 16px)', height: 'calc(100vh - 16px)' }}>
+                    <ResponsiveContainer>
+                        <ComposedChart
+                            width={600}
+                            height={400}
+                            data={data}
+                            margin={{ top: 40, right: 40, bottom: 30, left: 40 }}
+                        >
+                            <CartesianGrid stroke="#f5f5f5" />
+                            <XAxis dataKey="dateBuy" />
+                            <XAxis dataKey="dateRent" />
+
+
+                            <YAxis yAxisId="left" />
+                            <YAxis yAxisId="right" orientation="right" />
+
+                            <Tooltip />
+                            <Legend />
+
+                            <Bar yAxisId="left" dataKey="rent" barSize={30} fill="#7ac4c0" />
+                            <Line yAxisId="right" type="monotone" dataKey="buy" stroke="#ff7300" />
+                        </ComposedChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/*
                 <TextField
                     control={control}
                     type='search'
@@ -128,6 +178,7 @@ const Sample = () => {
 
                     <ButtonField type='primary' htmlType='submit' text='클릭' />
                 </Form>
+                */}
             </Content>
         </div>
     );
