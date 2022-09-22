@@ -3,9 +3,10 @@ import { Select, SelectProps } from 'antd';
 import { Control, Controller } from 'react-hook-form';
 
 export interface IPropsSelect {
-    name: string;
+    name?: string;
     control?: Control;
 
+    placeholder?: string;
     options: { value: string | number | boolean; label: string; disabled?: boolean }[];
     onChange?: (data: any) => void;
     style?: any;
@@ -15,6 +16,7 @@ export interface IPropsSelect {
 const SelectField: FC<IPropsSelect> = ({
                                            name,
                                            control,
+                                           placeholder,
                                            options,
                                            onChange,
                                            ...props
@@ -23,11 +25,15 @@ const SelectField: FC<IPropsSelect> = ({
         <Select
             {...field}
             {...props}
+            placeholder={placeholder}
             onChange={(e) => {
                 if (onChange) {
                     onChange(e);
                 }
-                field.onChange(e);
+
+                if (field) {
+                    field.onChange(e);
+                }
             }}
         >
             {options.map((item, key) => (
