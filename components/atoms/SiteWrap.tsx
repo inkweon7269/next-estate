@@ -37,6 +37,7 @@ const SiteWrap: FC<any> = ({ children }) => {
                         { label: 'sample', key: '/sample' },
                         { label: '아파트 정보', key: '/apt' },
                         { label: '즐겨찾기', key: '/favorite' },
+                        { label: 'KB 부동산', key: '/kb' },
                     ]}
                     onSelect={onMenuSelect}
                 />

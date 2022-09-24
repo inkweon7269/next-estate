@@ -30,8 +30,7 @@ export const getFavoriteCharts = async (token, params: any) => {
     return data;
 };
 
-export const postFavorite = async (data: any) => {
-    const token = getCookie('token');
+export const postFavorite = async ({ token, data }) => {
     const res = await axiosInstance.post('/favorite', data, {
         headers: getJWTHeader(token),
     });

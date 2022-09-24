@@ -60,8 +60,8 @@ const useCrawling = () => {
             message.success(content);
         },
         onSuccess: (res, variables, context) => {
+            queryClient.invalidateQueries([aptKeys.simple, aptKeys.deals]);
             message.success('정보를 업데이트했습니다.');
-            queryClient.invalidateQueries([aptKeys.deals]);
         },
     });
 };

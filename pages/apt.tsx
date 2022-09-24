@@ -58,8 +58,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         // search: context.query.search ? context.query.search : '',
     };
 
-    // await queryClient.prefetchQuery([queryKeys.apt], () => getAptSimple());
-    await queryClient.prefetchQuery([aptKeys.deals, token, params], () => getAptDeals(token, params));
+    await queryClient.prefetchQuery([queryKeys.apt], () => getAptSimple(token));
+    await queryClient.prefetchQuery([aptKeys.deals, params], () => getAptDeals(token, params));
 
     return {
         props: {

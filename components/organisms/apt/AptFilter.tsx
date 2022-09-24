@@ -49,9 +49,9 @@ const AptFilter = ({ params }) => {
     const onSubmitFavorite = () => {
         const data = {
             id: params.apt,
-        };
+        }
 
-        favoriteMutate(data);
+        favoriteMutate({ token, data });
     };
 
     return (
