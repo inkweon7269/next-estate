@@ -1,9 +1,8 @@
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import { axiosInstance, getJWTHeader } from '../../../../axiosInstance';
-import { queryKeys } from '../../../../react-query/constants';
+import { aptKeys, queryKeys } from '../../../../react-query/constants';
 import { message } from 'antd';
-import { getCookie, setCookie } from 'cookies-next';
-import { queryClient } from '../../../../react-query/queryClient';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const getAptSimple = async (token) => {
     const { data } = await axiosInstance.get('/apt/simple', {
@@ -27,7 +26,7 @@ export const getCrawling = async () => {
 };
 
 const useAptSimple = (token) => {
-    return useQuery([queryKeys.apt, token], () => getAptSimple(token), {
+    return useQuery([aptKeys.simple, token], () => getAptSimple(token), {
         onError: error => {
             const content = error instanceof Error ? error.message : 'error connecting to the server';
             message.error(content);
@@ -36,7 +35,7 @@ const useAptSimple = (token) => {
 };
 
 const useDeals = (token, params: any) => {
-    return useQuery([queryKeys.deals, token, params], () => getAptDeals(token, params), {
+    return useQuery([aptKeys.deals, token, params], () => getAptDeals(token, params), {
         onError: error => {
             const content = error instanceof Error ? error.message : 'error connecting to the server';
             message.error(content);
@@ -47,13 +46,14 @@ const useDeals = (token, params: any) => {
 const useAptDeals = (token, params: any) => {
     return useQueries({
         queries: [
-            { queryKey: [queryKeys.apt, token], queryFn: () => getAptSimple(token) },
-            { queryKey: [queryKeys.deals, token], queryFn: () => getAptDeals(token, params) },
+            { queryKey: [aptKeys.simple, token], queryFn: () => getAptSimple(token) },
+            { queryKey: [aptKeys.deals, token], queryFn: () => getAptDeals(token, params) },
         ],
     });
 };
 
 const useCrawling = () => {
+    const queryClient = useQueryClient();
     return useMutation(getCrawling, {
         onError: (error, variables, context) => {
             const content = error instanceof Error ? error.message : 'error connecting to the server';
@@ -61,7 +61,7 @@ const useCrawling = () => {
         },
         onSuccess: (res, variables, context) => {
             message.success('정보를 업데이트했습니다.');
-            queryClient.invalidateQueries([queryKeys.deals]);
+            queryClient.invalidateQueries([aptKeys.deals]);
         },
     });
 };

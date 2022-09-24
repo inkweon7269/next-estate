@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import cookies from 'next-cookies';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { queryKeys } from '../react-query/constants';
-import { getAllFavorite } from '../components/organisms/favorite/hooks/useFavorite';
+import { favoriteKeys, queryKeys } from '../react-query/constants';
+import {
+    getAllFavorite,
+    getFavoriteCharts,
+    getFavoriteSimple,
+} from '../components/organisms/favorite/hooks/useFavorite';
 import { useForm, FormProvider } from 'react-hook-form';
 import SiteHeader from '../components/atoms/SiteHeader';
 import { Layout } from 'antd';
@@ -32,9 +36,9 @@ const Favorite = ({ params }) => {
                     <FavoriteFilter params={params} />
                 </Pan>
 
-                <Pan>
+                {/*<Pan>
                     <FavoriteTable params={params} />
-                </Pan>
+                </Pan>*/}
             </Content>
         </FormProvider>
     );
@@ -55,7 +59,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         endDate: context.query.endDate ? context.query.endDate : '',
     };
 
-    await queryClient.prefetchQuery([queryKeys.favorite, params], () => getAllFavorite(token, params));
+    await queryClient.prefetchQuery([favoriteKeys.simple], () => getFavoriteSimple(token));
+    await queryClient.prefetchQuery([favoriteKeys.list, params], () => getAllFavorite(token, params));
+    // await queryClient.prefetchQuery([queryKeys.favorite, params], () => getFavoriteCharts(token, params));
 
     return {
         props: {

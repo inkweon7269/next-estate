@@ -4,7 +4,7 @@ import SiteHeader from '../components/atoms/SiteHeader';
 import { Layout } from 'antd';
 import { GetServerSideProps } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { queryKeys } from '../react-query/constants';
+import { aptKeys, queryKeys } from '../react-query/constants';
 import { getAptDeals, getAptSimple } from '../components/organisms/apt/hooks/useApts';
 import { useRouter } from 'next/router';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -59,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
 
     // await queryClient.prefetchQuery([queryKeys.apt], () => getAptSimple());
-    await queryClient.prefetchQuery([queryKeys.apt, token, params], () => getAptDeals(token, params));
+    await queryClient.prefetchQuery([aptKeys.deals, token, params], () => getAptDeals(token, params));
 
     return {
         props: {
